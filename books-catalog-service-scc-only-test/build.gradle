@@ -1,0 +1,32 @@
+group = 'de.sidion.books'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+apply plugin: 'maven'
+
+dependencies {
+    implementation project(":books-catalog-service")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation('org.springframework.boot:spring-boot-starter')
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation("org.springframework.cloud:spring-cloud-starter-contract-verifier")
+}
+
+contracts {
+    contractDependency {
+        stringNotation = "${project.group}:book-catalog-service:+"
+    }
+    contractsPath = "*"
+    baseClassForTests = "de.sidion.books.catalog.contracts.BookCatalogRestEndpointBaseSccOnlyTest"
+}
+
+sourceSets {
+    contractTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('build/generated-test-sources')
+        }
+    }
+}

@@ -1,0 +1,20 @@
+group = 'de.sidion.books'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+apply plugin: 'au.com.dius.pact'
+
+dependencies {
+    implementation project(":books-catalog-service")
+
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation('org.springframework.boot:spring-boot-starter')
+
+    implementation group: 'au.com.dius', name: 'pact-jvm-consumer-junit_2.12', version: '3.5.13'
+    implementation group: 'au.com.dius', name: 'pact-jvm-provider-junit_2.12', version: '3.5.13'
+    implementation group: 'au.com.dius', name: 'pact-jvm-provider-spring_2.12', version: '3.5.13'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+
+}
+

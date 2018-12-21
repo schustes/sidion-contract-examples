@@ -1,0 +1,7 @@
+stubrunner:
+  amqp:
+    enabled: true
+
+projectVersion: ${project.version}
+projectGroup: ${project.group}
+projectName: ${project.name}

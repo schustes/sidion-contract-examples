@@ -1,0 +1,8 @@
+server:
+  port: 8082
+catalog:
+  port: 9999
+
+stubrunner:
+  amqp:
+    enabled: true

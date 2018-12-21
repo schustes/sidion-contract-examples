@@ -1,0 +1,14 @@
+sourceCompatibility = 1.8
+
+dependencies {
+    implementation project(":common")
+    implementation project(":books-order-service")
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+
+    testImplementation group: 'au.com.dius', name: 'pact-jvm-consumer-junit_2.12', version: '3.5.13'
+    testImplementation group: 'au.com.dius', name: 'pact-jvm-provider-junit_2.12', version: '3.5.13'
+    testImplementation group: 'au.com.dius', name: 'pact-jvm-provider-spring_2.12', version: '3.5.13'
+
+}
+

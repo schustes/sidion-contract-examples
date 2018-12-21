@@ -1,0 +1,37 @@
+sourceCompatibility = 1.8
+
+apply plugin: 'maven'
+
+dependencies {
+    testImplementation project(":books-order-service")
+    implementation("org.springframework.boot:spring-boot-starter-amqp")
+
+    testImplementation("org.springframework.cloud:spring-cloud-contract-stub-runner")
+    testImplementation("org.springframework.cloud:spring-cloud-starter-contract-verifier")
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+}
+
+contracts {
+    contractDependency {
+        stringNotation = "${project.group}:book-catalog-service:+"
+    }
+    contractsPath = "*"
+    baseClassForTests = "de.sidion.books.order.contracts.OderEventSccOnlyTest"
+}
+
+sourceSets {
+    contractTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('build/generated-test-sources')
+        }
+    }
+}
+
+processTestResources {
+    filesMatching("**/application.properties") {
+        expand(project.properties)
+    }
+}

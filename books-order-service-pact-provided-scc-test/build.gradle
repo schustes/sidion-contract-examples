@@ -1,0 +1,41 @@
+sourceCompatibility = 1.8
+
+apply plugin: 'maven'
+
+dependencies {
+    implementation project(":common")
+    implementation project(":books-order-service")
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation("org.springframework.boot:spring-boot-starter-amqp")
+    testImplementation("org.springframework.cloud:spring-cloud-contract-stub-runner")
+    testImplementation("org.springframework.cloud:spring-cloud-starter-contract-verifier")
+}
+
+contracts {
+    contractDependency {
+        stringNotation = "${project.group}:book-order-service:+"
+    }
+    contractsPath = "*"
+    contractsMode = "REMOTE"
+    baseClassForTests = "de.sidion.books.order.contracts.OrderEventPactWithSccTest"
+    contractRepository {
+        repositoryUrl = "pact://http://localhost:80"
+    }
+}
+
+sourceSets {
+    contractTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('build/generated-test-sources')
+        }
+    }
+}
+
+processTestResources {
+    filesMatching("**/application.yaml") {
+        expand(project.properties)
+    }
+}

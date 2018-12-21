@@ -1,0 +1,74 @@
+buildscript {
+
+    ext {
+        dependencyManagementPluginVersion = '1.0.3.RELEASE'
+        springCloudVersion = 'Finchley.RC2'
+        springBootVersion = '2.0.4.RELEASE'
+        //verifierVersion = '2.0.1.RELEASE'
+        //verifierVersion = '2.1.0-JM'
+        verifierVersion = '2.1.1-S'
+
+    }
+
+    repositories {
+        maven {
+            url 'http://nexus.measurementsolutions.de/content/repositories/plugins/'
+        }
+
+        mavenCentral()
+
+    }
+
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:${dependencyManagementPluginVersion}"
+        classpath "org.springframework.cloud:spring-cloud-contract-gradle-plugin:${verifierVersion}"
+        classpath "org.springframework.cloud:spring-cloud-contract-pact:${verifierVersion}"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "au.com.dius:pact-jvm-provider-gradle_2.12:3.5.13"
+    }
+
+}
+
+allprojects {
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven { url "http://repo.spring.io/snapshot" }
+        maven { url "http://repo.spring.io/milestone" }
+        maven { url "http://repo.spring.io/release" }
+
+    }
+
+    group = "de.sidion.books"
+    version '0.0.1-SNAPSHOT'
+    apply plugin: 'java'
+
+    processResources {
+        filesMatching("**/application.properties") {
+            expand(project.properties)
+        }
+    }
+
+
+}
+
+subprojects {
+
+    apply plugin: 'spring-cloud-contract'
+    apply plugin: 'io.spring.dependency-management'
+
+    dependencies {
+        implementation "org.projectlombok:lombok:1.16.20"
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+            mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:2.0.2.RELEASE"
+        }
+    }
+
+}
+

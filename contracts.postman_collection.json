@@ -1,0 +1,53 @@
+{
+	"variables": [],
+	"info": {
+		"name": "contracts",
+		"_postman_id": "1b63d095-b820-8633-1117-7e41be344710",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "client-get-books",
+			"request": {
+				"url": "localhost:8082/books",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "catalog-get-books",
+			"request": {
+				"url": "localhost:8081/books",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "client-order-book",
+			"request": {
+				"url": "localhost:8082/books",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"customerId\":\"1\",\n\t\"bookId\":\"1\",\n\t\"isbn\": \"521-8-99350-913-2\"\n\t\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

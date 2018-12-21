@@ -1,0 +1,24 @@
+group = 'de.sidion.books'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+apply plugin: 'au.com.dius.pact'
+
+test {
+    systemProperty 'pact.rootDir', 'target/pacts'
+    systemProperty 'pact.verifier.publishResults', "true"
+}
+pact {
+    publish {
+        pactBrokerUrl = "http://localhost:80"
+        pactDirectory = "target/pacts"
+    }
+}
+
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-amqp")
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation("org.springframework.cloud:spring-cloud-contract-pact")
+    testImplementation "au.com.dius:pact-jvm-consumer-junit_2.12:3.5.13"
+}
