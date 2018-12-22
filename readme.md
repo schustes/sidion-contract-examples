@@ -33,3 +33,4 @@ scc Integration (issues 796 und 797 in scc github).
 ## Voraussetzungen ##
 - Pact Broker auf einer lokalen Maschine. Als einfachste Lösung wird die docker Löunsg von Pact empfohlen (siehe Doku unter
 https://hub.docker.com/r/dius/pact-broker/)
+- Eine RabbitMQ Default Installation (localhost, Port 5672)
