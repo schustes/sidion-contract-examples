@@ -24,13 +24,16 @@ Es handelt sich um keine wirkliche Anwendung. Eine Postman collection existiert,
 #### Message-Api-Tests ####
 - books-order-service-pact-only-test: Beispiel für einen mit pact-jvm implementierten Test
 - books-order-service-scc-only-test: Beispiel für einen mit scc implementierten Test
-- books-order-service-pact-provided-scc-test: Beispiel für einen mit scc implementierten Test der als Quelle Pact Verträge verwendet
+- books-order-service-pact-provided-scc-test: Beispiel für einen mit scc implementierten Test der als Quelle Pact Verträge verwende
 
 ## Stolpersteine ##
 Es wurde ein eigener fork von spring-cloud-contract zu grunde gelegt. Hintergrund sind diverse bugs in der pact und
 scc Integration (issues 796 und 797 in scc github).
 
 ## Voraussetzungen ##
-- Pact Broker auf einer lokalen Maschine. Als einfachste Lösung wird die docker Löunsg von Pact empfohlen (siehe Doku unter
+- Pact Broker auf einer lokalen Maschine, der auf localhost:80 erreichbar ist (alternative Konfiguration in Annotationen und build.gradle Dateien anpassen). Als einfachste Lösung wird die docker Löunsg von Pact empfohlen (siehe Doku unter
 https://hub.docker.com/r/dius/pact-broker/)
 - Eine RabbitMQ Default Installation (localhost, Port 5672)
+
+## Tests durchführen ##
+Nachdem ein Pact Broker gestartet wurde im Root Verzeichnis gradle test ausführen. Führt alle Contract Tests in den Subprojekten aus.
