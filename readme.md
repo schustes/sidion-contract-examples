@@ -16,12 +16,18 @@ in den verschiedenen Formaten definiert (rest / messaging mit pact / scc).
 
 Es handelt sich um keine wirkliche Anwendung. Eine Postman collection existiert, um mit den Schnittstellen zu experimentieren.
 
-#### Rest-Api-Tests ####
+#### Consumer Tests: Im Sub-Projekt books-client####
+- BookCatalogConsumerPactTest.java: Rest-Api Consumer Test mit Pact
+- BookOrderedEventConsumerPactTest.java: Messaging Consumer Test mit Pact
+- BookCatalogConsumerSccStubrunnerTest.java: Rest-Api Consumer Test mit scc
+- BookOrderedEventConsumerSccStubrunnerTest.java: Messaging Consumer Test mit scc
+
+#### Rest-Api Producer Tests####
 - books-catalog-service-pact-only-test: Beispiel für einen mit pact-jvm implementierten Test
 - books-catalog-service-scc-only-test: Beispiel für einen mit scc implementierten Test
 - books-catalog-service-pact-provided-scc-test: Beispiel für einen mit scc implementierten Test der als Quelle Pact Verträge verwendet
 
-#### Message-Api-Tests ####
+#### Messaging Producer Tests ####
 - books-order-service-pact-only-test: Beispiel für einen mit pact-jvm implementierten Test
 - books-order-service-scc-only-test: Beispiel für einen mit scc implementierten Test
 - books-order-service-pact-provided-scc-test: Beispiel für einen mit scc implementierten Test der als Quelle Pact Verträge verwende
