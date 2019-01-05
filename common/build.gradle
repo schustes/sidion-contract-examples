@@ -4,4 +4,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-hateoas")
     implementation('org.springframework.boot:spring-boot-starter-test')
+
+    implementation 'org.springframework.amqp:spring-rabbit:2.1.2.RELEASE'
+    implementation 'org.springframework.amqp:spring-amqp:2.1.2.RELEASE'
+
 }

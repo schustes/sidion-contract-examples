@@ -40,6 +40,10 @@ scc Integration (issues 796 und 797 in scc github).
 - Pact Broker auf einer lokalen Maschine, der auf localhost:80 erreichbar ist (alternative Konfiguration in Annotationen und build.gradle Dateien anpassen). Als einfachste Lösung wird die docker Löunsg von Pact empfohlen (siehe Doku unter
 https://hub.docker.com/r/dius/pact-broker/)
 - Eine RabbitMQ Default Installation (localhost, Port 5672). Nur erforderlich wenn man nicht nur die Tests, sondern auch die Dummy-App ausprobieren möchte
+- Java 8 (nicht höher)
 
 ## Tests durchführen ##
-Nachdem ein Pact Broker gestartet wurde im Root Verzeichnis gradle test ausführen. Führt alle Contract Tests in den Subprojekten aus.
+- Pact Broker starten
+- In das Projekt Root Verzeichnis
+- cd books-client; gradle test pactPublish ausführen. Publiziert im ersten Schritt die Pacts auf den lokalen Broker
+- cd ..; gradle test ausführen. Führt alle Contract Tests in den Subprojekten aus. Dabei werden auch die Pacts vom Broker heruntergeladen.

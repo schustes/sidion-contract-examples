@@ -16,7 +16,7 @@ public class BookOrderEventRabbitSender implements NotificationService {
 
     @Override
     public void publishBookOrderedEvent(BookOrderedEvent event) {
-        log.info("Sending event {} via rabbitTemplate {}", event, rabbitTemplate);
+        log.info("Sending event {} via orderServiceRabbitTemplate {}", event, rabbitTemplate);
 
         rabbitTemplate.convertAndSend("order-exchange", "orders.books.#", event);
 

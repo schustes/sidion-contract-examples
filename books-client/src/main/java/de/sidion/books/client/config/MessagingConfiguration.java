@@ -30,19 +30,19 @@ public class MessagingConfiguration {
     public static final String BOOK_ORDER_QUEUE = "order-test-queue";
 
     @Bean
-    public Queue orderQueue() {
+    public Queue clientOrderQueueBean() {
         return new Queue(BOOK_ORDER_QUEUE);
     }
 
     @Bean
-    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+    public RabbitTemplate clientRabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
-        template.setMessageConverter(converter());
+        template.setMessageConverter(clientJsonMessageConverter());
         return template;
     }
 
-    @Bean("order-exchange")
-	public TopicExchange orderExchange() {
+    @Bean
+	public TopicExchange clientOrderExchangeBean() {
         return new TopicExchange(ORDER_EXCHANGE);
 	}
 
@@ -55,7 +55,7 @@ public class MessagingConfiguration {
     public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
-        factory.setMessageConverter(converter());
+        factory.setMessageConverter(clientJsonMessageConverter());
 
         FixedBackOffPolicy backOffPolicy = new FixedBackOffPolicy();
         backOffPolicy.setBackOffPeriod(2000);
@@ -68,7 +68,7 @@ public class MessagingConfiguration {
     }
 
     @Bean
-    public Jackson2JsonMessageConverter converter() {
+    public Jackson2JsonMessageConverter clientJsonMessageConverter() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.registerModule(new JavaTimeModule());

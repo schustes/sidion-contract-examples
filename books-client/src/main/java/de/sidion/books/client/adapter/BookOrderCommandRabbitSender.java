@@ -16,7 +16,7 @@ public class BookOrderCommandRabbitSender implements BookOrderDispatcher {
 
     @Override
     public void orderBook(BookOrderCommand command) {
-        log.info("sending OrderCommandMessage {} with rabbitTemplate {}", command, rabbitTemplate);
+        log.info("sending OrderCommandMessage {} with clientRabbitTemplate {}", command, rabbitTemplate);
         rabbitTemplate.convertAndSend("order-exchange", "orders.books.#", command);
     }
 }
