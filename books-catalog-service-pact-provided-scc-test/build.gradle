@@ -6,10 +6,6 @@ dependencies {
     testImplementation project(":books-catalog-service")
     testImplementation project(":common")
 
-    testImplementation group: 'au.com.dius', name: 'pact-jvm-consumer-junit_2.12', version: '3.5.13'
-    testImplementation group: 'au.com.dius', name: 'pact-jvm-provider-junit_2.12', version: '3.5.13'
-    testImplementation group: 'au.com.dius', name: 'pact-jvm-provider-spring_2.12', version: '3.5.13'
-
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation("org.springframework.cloud:spring-cloud-starter-contract-verifier")
 }

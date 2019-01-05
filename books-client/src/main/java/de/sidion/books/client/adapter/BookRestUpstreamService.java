@@ -50,7 +50,7 @@ public class BookRestUpstreamService implements BookCatalogService {
     private HttpEntity<?> createHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.put(ROLE_HEADER, Collections.singletonList(ROLE_HEADER_VALUE));
-        headers.put(CONTENT_HEADER, Collections.singletonList(CONTENT_HEADER_VALUE));
+        headers.put(HttpHeaders.CONTENT_TYPE, Collections.singletonList(CONTENT_HEADER_VALUE));
         headers.put(HttpHeaders.ACCEPT, Collections.singletonList("application/json"));
         return new HttpEntity<>(headers);
     }

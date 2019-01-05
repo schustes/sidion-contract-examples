@@ -15,9 +15,9 @@ dependencies {
 
 contracts {
     contractDependency {
-        stringNotation = "${project.group}:book-catalog-service:+"
+        stringNotation = ''
     }
-    contractsPath = "*"
+    contractsPath = ''
     baseClassForTests = "de.sidion.books.catalog.contracts.BookCatalogRestEndpointBaseSccOnlyTest"
 }
 

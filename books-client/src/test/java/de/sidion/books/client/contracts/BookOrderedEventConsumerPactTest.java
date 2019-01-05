@@ -31,7 +31,7 @@ public class BookOrderedEventConsumerPactTest {
         Map<String, String> metadata = new HashMap<>();
         MessagePact pact =  builder
                 .given("orderCommandReceived()")
-                .expectsToReceive("order-exchange")
+                .expectsToReceive("a message sent via order-exchange")
                 .withMetadata(metadata)
                 .withContent(body)
                 .toPact();

@@ -2,11 +2,9 @@ buildscript {
 
     ext {
         dependencyManagementPluginVersion = '1.0.3.RELEASE'
-        springCloudVersion = 'Finchley.RC2'
-        springBootVersion = '2.0.4.RELEASE'
-        //verifierVersion = '2.0.1.RELEASE'
-        //verifierVersion = '2.1.0-JM'
-        verifierVersion = '2.1.1-S'
+        springCloudVersion = 'Greenwich.RC2'
+        springBootVersion = '2.1.1.RELEASE'
+        verifierVersion = '2.1.1-T'
 
     }
 
@@ -21,10 +19,12 @@ buildscript {
 
     dependencies {
         classpath "io.spring.gradle:dependency-management-plugin:${dependencyManagementPluginVersion}"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+
+        classpath "au.com.dius:pact-jvm-provider-gradle_2.12:3.5.13"
+
         classpath "org.springframework.cloud:spring-cloud-contract-gradle-plugin:${verifierVersion}"
         classpath "org.springframework.cloud:spring-cloud-contract-pact:${verifierVersion}"
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-        classpath "au.com.dius:pact-jvm-provider-gradle_2.12:3.5.13"
     }
 
 }
@@ -64,9 +64,9 @@ subprojects {
 
     dependencyManagement {
         imports {
-            mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
-            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-            mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:2.0.2.RELEASE"
+            mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+            //mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+            mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:2.1.1-T"
         }
     }
 

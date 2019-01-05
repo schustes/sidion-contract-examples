@@ -1,5 +1,7 @@
 package de.sidion.books.order.contracts;
 
+import au.com.dius.pact.provider.PactVerifyProvider;
+import au.com.dius.pact.provider.junit.PactRunner;
 import au.com.dius.pact.provider.junit.Provider;
 import au.com.dius.pact.provider.junit.State;
 import au.com.dius.pact.provider.junit.loader.PactBroker;
@@ -12,6 +14,8 @@ import de.sidion.books.order.domain.BookOrderDomainService;
 import de.sidion.books.order.domain.BookOrderRepository;
 import de.sidion.books.order.domain.BookOrderedEvent;
 import de.sidion.books.order.domain.NotificationService;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
@@ -20,11 +24,7 @@ import java.util.Collections;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-/**
- * Uncommend the lines with annotation to run this test. It was commented because the amqp target uses reflection classes
- * which are not available in jdks > 9. If you use jdk 8 anyway, you can safely uncomment th lines.
- */
-//@RunWith(PactRunner.class)
+@RunWith(PactRunner.class)
 @Provider("book-order-service")
 @PactBroker(host="localhost", port="80", protocol = "http")
 public class OrderEventPactOnlyTest {
@@ -34,7 +34,7 @@ public class OrderEventPactOnlyTest {
 
     private BookOrderRepository repo = Mockito.mock(BookOrderRepository.class);
 
-    private NotificationService notificationService = Mockito.mock(NotificationService.class);//new BookOrderEventRabbitSender(rabbitTemplate);
+    private NotificationService notificationService = Mockito.mock(NotificationService.class);
 
     private BookOrderDomainService service = new BookOrderDomainService(repo, notificationService);
 
@@ -43,9 +43,8 @@ public class OrderEventPactOnlyTest {
         //optional method to prepare test data etc.
     }
 
-    //@Test
-    //@Ignore("Requires a JDK 8 because of reflection usage in messaging target. Do not run this test unless a jdk 8 is used")
-    //@PactVerifyProvider("order-exchange")
+    @Test
+    @PactVerifyProvider("a message sent via order-exchange")
     public String verifyMessageForOrder() throws Exception {
 
         String bookId = "1";
@@ -58,7 +57,7 @@ public class OrderEventPactOnlyTest {
 
         Mockito.verify(notificationService).publishBookOrderedEvent(captor.capture());
 
-        BookOrderedEvent event = captor.getValue();//new BookOrderedEvent("978-3-86680-192-9", "1");
+        BookOrderedEvent event = captor.getValue();
         return new ObjectMapper().writeValueAsString(event);
     }
 

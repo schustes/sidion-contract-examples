@@ -85,7 +85,7 @@ public class BookCatalogConsumerPactTest {
         return map;
     }
 
-    private HttpEntity<?> actualRequestHeaders() {
+    private HttpEntity<?> requestHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.put(ROLE_HEADER, Collections.singletonList(ROLE_HEADER_VALUE));
         headers.put(CONTENT_HEADER, Collections.singletonList(CONTENT_HEADER_VALUE));
@@ -105,10 +105,8 @@ public class BookCatalogConsumerPactTest {
 
     private void verifyGetReturnsBooks(RestTemplate template) {
 
-        HttpEntity<?> entity = actualRequestHeaders();
-
         ResponseEntity<Book[]> response =
-                template.exchange("http://localhost:" + 8081 + "/books", HttpMethod.GET, entity, Book[].class);
+                template.exchange("http://localhost:" + 8081 + "/books", HttpMethod.GET, requestHeaders(), Book[].class);
 
         assertThat(response.getStatusCode().value(), equalTo(200));
 
@@ -126,11 +124,9 @@ public class BookCatalogConsumerPactTest {
 
     private void verifyDeleteIsPreventedForNormalUser(RestTemplate template) {
 
-        HttpEntity<?> entity = actualRequestHeaders();
-
         try {
 
-            template.exchange("http://localhost:" + 8081 + "/books/123", HttpMethod.DELETE, entity, Void.class);
+            template.exchange("http://localhost:" + 8081 + "/books/123", HttpMethod.DELETE, requestHeaders(), Void.class);
 
         } catch (Exception e) {
             assertThat(e.getMessage(), containsString("401"));
