@@ -1,11 +1,8 @@
-sourceCompatibility = 1.8
-
 apply plugin: 'maven'
 
 dependencies {
-    implementation project(":common")
-    implementation project(":books-order-service")
-
+    testImplementation project(":common")
+    testImplementation project(":books-order-service")
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation("org.springframework.boot:spring-boot-starter-amqp")
     testImplementation("org.springframework.cloud:spring-cloud-contract-stub-runner")
