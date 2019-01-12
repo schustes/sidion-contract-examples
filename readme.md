@@ -45,5 +45,5 @@ https://hub.docker.com/r/dius/pact-broker/)
 ## Tests durchführen ##
 - Pact Broker starten
 - In das Projekt Root Verzeichnis wechseln
-- cd books-client; dann 'gradle test pactPublish' ausführen. Publiziert im ersten Schritt die Pacts auf den lokalen Broker
+- cd books-client; dann 'gradle test pactPublish' ausführen. Publiziert im ersten Schritt die Pacts auf den lokalen Broker.
 - cd ..; dann 'gradle test' ausführen. Führt alle Contract Tests in den Subprojekten aus. Dabei werden auch die Pacts vom Broker heruntergeladen.

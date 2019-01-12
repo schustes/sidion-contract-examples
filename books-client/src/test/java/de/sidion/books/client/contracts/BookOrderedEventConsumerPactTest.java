@@ -29,9 +29,10 @@ public class BookOrderedEventConsumerPactTest {
         body.stringMatcher("isbn", "[0-9]{3}-[0-9]{1}-[0-9]{5}-[0-9]{3}-[0-9]{1}", "978-3-86680-192-9");
 
         Map<String, String> metadata = new HashMap<>();
+        metadata.put("sentTo", "order-exchange");
         MessagePact pact =  builder
                 .given("orderCommandReceived()")
-                .expectsToReceive("a message sent via order-exchange")
+                .expectsToReceive("a message from order-queue")
                 .withMetadata(metadata)
                 .withContent(body)
                 .toPact();

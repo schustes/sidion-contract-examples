@@ -44,7 +44,7 @@ public class OrderEventPactOnlyTest {
     }
 
     @Test
-    @PactVerifyProvider("a message sent via order-exchange")
+    @PactVerifyProvider("a message from order-queue")
     public String verifyMessageForOrder() throws Exception {
 
         String bookId = "1";

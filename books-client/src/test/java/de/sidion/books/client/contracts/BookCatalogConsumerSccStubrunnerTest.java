@@ -1,8 +1,8 @@
 package de.sidion.books.client.contracts;
 
 import de.sidion.books.client.BookClientApplication;
+import de.sidion.books.client.adapter.BookRestUpstreamService;
 import de.sidion.books.client.domain.Book;
-import de.sidion.books.client.domain.BookCatalogService;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +25,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class BookCatalogConsumerSccStubrunnerTest {
 
     @Autowired
-    BookCatalogService bookService;
+    BookRestUpstreamService bookService;
 
     @Test
     public void verifyBookCatalogGetAllBooksContract() throws Exception {
