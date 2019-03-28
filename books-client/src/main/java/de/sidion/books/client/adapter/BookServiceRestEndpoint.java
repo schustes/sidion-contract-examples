@@ -2,7 +2,7 @@ package de.sidion.books.client.adapter;
 
 import de.sidion.books.client.domain.Book;
 import de.sidion.books.client.domain.BookOrderCommand;
-import de.sidion.books.client.domain.BookService;
+import de.sidion.books.client.domain.BookDomainService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,23 +17,23 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/books")
 @RestController
-public class BookRestEndpoint {
+public class BookServiceRestEndpoint {
 
-    private final BookService bookService;
+    private final BookDomainService bookDomainService;
 
     @GetMapping
     public List<Book> getAllBooks() {
-        return bookService.fetchBooks();
+        return bookDomainService.fetchBooks();
     }
 
     @DeleteMapping(path = "{id}")
     public void deleteBook(@PathVariable("id") String id) {
-        bookService.deleteBook(id);
+        bookDomainService.deleteBook(id);
     }
 
     @PostMapping(consumes = "application/json")
     public void orderBook(@RequestBody BookOrderCommand orderCommand) {
-        bookService.orderBook(orderCommand);
+        bookDomainService.orderBook(orderCommand);
     }
 
 }

@@ -16,7 +16,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class BookRestUpstreamService implements BookCatalogService {
+public class BookCatalogRestService implements BookCatalogService {
 
     private static final String UPSTREAM_SCHEME = "http";
     private static final String UPSTREAM_HOST = "localhost";

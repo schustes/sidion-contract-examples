@@ -1,6 +1,6 @@
 package de.sidion.books.catalog.adapter;
 
-import de.sidion.books.catalog.domain.BookDomainService;
+import de.sidion.books.catalog.domain.BookCatalogDomainService;
 import de.sidion.books.catalog.domain.Book;
 import de.sidion.books.catalog.domain.UserNotAuthorizedException;
 import lombok.RequiredArgsConstructor;
@@ -18,19 +18,19 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/books")
-public class BookRestEndpoint {
+public class BookCatalogRestEndpoint {
 
-    private final BookDomainService bookDomainService;
+    private final BookCatalogDomainService bookCatalogDomainService;
 
     @GetMapping
     public List<Book> getAllBooks() {
-        return bookDomainService.getAllBooks();
+        return bookCatalogDomainService.getAllBooks();
     }
 
     @DeleteMapping(path = "{id}")
     public void deleteBook(HttpServletRequest request, @PathVariable("id") int id) {
         try {
-            bookDomainService.deleteBook(request.getHeader("X-ROLE"), id);
+            bookCatalogDomainService.deleteBook(request.getHeader("X-ROLE"), id);
         } catch (UserNotAuthorizedException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }

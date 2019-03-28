@@ -1,6 +1,6 @@
 package de.sidion.books.client.contracts;
 
-import de.sidion.books.client.domain.BookService;
+import de.sidion.books.client.domain.BookDomainService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class BookOrderedEventConsumerSccStubrunnerTest {
     StubTrigger stubTrigger;
 
     @Autowired
-    BookService service;
+    BookDomainService service;
 
     @Test
     public void verifyBookOrderedEventContract() throws Exception {

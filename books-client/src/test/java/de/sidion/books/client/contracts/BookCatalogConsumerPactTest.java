@@ -51,7 +51,7 @@ public class BookCatalogConsumerPactTest {
         return builder
 
                 .given("get")
-                .uponReceiving("A successful api GET call")
+                .uponReceiving("A successful Api GET call")
                 .path("/books")
                 .headers(expectedRequestHeaders())
                 .method("GET")

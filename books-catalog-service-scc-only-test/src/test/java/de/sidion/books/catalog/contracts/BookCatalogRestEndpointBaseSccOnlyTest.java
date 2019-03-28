@@ -1,7 +1,7 @@
 package de.sidion.books.catalog.contracts;
 
 import de.sidion.books.catalog.BookCatalogApplication;
-import de.sidion.books.catalog.adapter.BookRestEndpoint;
+import de.sidion.books.catalog.adapter.BookCatalogRestEndpoint;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public abstract class BookCatalogRestEndpointBaseSccOnlyTest {
 
     @Autowired
-    private BookRestEndpoint endpoint;
+    private BookCatalogRestEndpoint endpoint;
 
     @Before
     public void setup() {
