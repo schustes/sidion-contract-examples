@@ -43,9 +43,15 @@ public class BookCatalogConsumerPactTest {
         DslPart dslPart = new PactDslJsonArray()
                 .object()
                 .integerType("id")
-                .stringMatcher("authorFirstName", ".*", "John")
-                .stringMatcher("authorLastName", ".*", "Doe")
+                //.stringMatcher("authorFirstName", ".*", "John")
+                //.stringMatcher("authorLastName", ".*", "Doe")
                 .stringMatcher("title", ".*", "A book")
+                .array("authors")
+                    .object()
+                        .stringType("firstName")
+                        .stringType("lastName")
+                    .closeObject()
+                .closeArray().asBody()
                 .stringMatcher("isbn", "[0-9]{3}-[0-9]{1}-[0-9]{5}-[0-9]{3}-[0-9]{1}", "978-3-86680-192-9");
 
         return builder
@@ -115,8 +121,8 @@ public class BookCatalogConsumerPactTest {
         assertThat(books.length, Matchers.is(1));
         Book book = books[0];
         assertThat(book.getId(), Matchers.isA(String.class));
-        assertThat(book.getAuthorFirstName(), Matchers.isA(String.class));
-        assertThat(book.getAuthorLastName(), Matchers.isA(String.class));
+        //assertThat(book.getAuthorFirstName(), Matchers.isA(String.class));
+        //assertThat(book.getAuthorLastName(), Matchers.isA(String.class));
         assertThat(book.getTitle(), Matchers.isA(String.class));
         assertThat(book.getIsbn().length(), Matchers.is(17));
 
