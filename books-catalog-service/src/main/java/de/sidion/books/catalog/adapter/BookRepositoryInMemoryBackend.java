@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,8 +19,9 @@ public class BookRepositoryInMemoryBackend implements BookRepository {
     @PostConstruct
     public void init() {
         Book book = Book.builder()
-                .authorFirstName("John")
-                .authorLastName("Doe")
+                //.authorFirstName("John")
+                //.authorLastName("Doe")
+                .authors(Collections.singletonList(new Book.Author("John", "Doe")))
                 .title("Endless possibilities in contract testing")
                 .id(1)
                 .isbn("521-8-99350-913-2")
