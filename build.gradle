@@ -3,8 +3,8 @@ buildscript {
     ext {
         dependencyManagementPluginVersion = '1.0.3.RELEASE'
         springCloudVersion = 'Greenwich.RC2'
-        springBootVersion = '2.1.1.RELEASE'
-        verifierVersion = '2.1.1.RELEASE'
+        springBootVersion = '2.2.0.BUILD-SNAPSHOT'
+        verifierVersion = '2.2.0.BUILD-SNAPSHOT'
 
     }
 
@@ -73,7 +73,7 @@ subprojects {
     dependencyManagement {
         imports {
             mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
-            mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:2.1.1.RELEASE"
+            mavenBom "org.springframework.cloud:spring-cloud-contract-dependencies:${verifierVersion}"
         }
     }
 

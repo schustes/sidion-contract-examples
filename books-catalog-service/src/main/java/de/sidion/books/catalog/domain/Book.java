@@ -33,7 +33,7 @@ public class Book {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Author {
-        String fistName;
+        String firstName;
         String lastName;
     }
 
