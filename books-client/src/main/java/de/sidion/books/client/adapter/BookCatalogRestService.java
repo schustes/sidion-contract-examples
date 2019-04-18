@@ -29,7 +29,7 @@ public class BookCatalogRestService implements BookCatalogService {
     private final RestTemplate restTemplate;
 
     @Value("${catalog.port}")
-    private int upstreamPort;
+    private int upstreamPort = 9999;
 
     @Override
     public List<Book> getAllBooks() {

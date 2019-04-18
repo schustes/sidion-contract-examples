@@ -17,6 +17,8 @@ public class Book {
     String authorLastName;
     String title;
     String isbn;
+    String someAdditionalField1;
+    String someAdditionalField2;
 
     @JsonPOJOBuilder(withPrefix = "")
     public static final class BookBuilder {

@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @PactBroker(host="localhost", port="80", protocol = "http")
 public class BookCatalogRestEndpointPactOnlyTest {
 
+    //Http Client
     @TestTarget
     public final Target target = new HttpTarget(8087);
 

@@ -6,22 +6,29 @@ import au.com.dius.pact.consumer.Pact;
 import au.com.dius.pact.consumer.PactVerification;
 import au.com.dius.pact.consumer.dsl.PactDslJsonBody;
 import au.com.dius.pact.model.v3.messaging.MessagePact;
-import org.junit.Assert;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import de.sidion.books.client.adapter.BookOrderedEventRabbitListener;
+import de.sidion.books.client.domain.BookDomainService;
+import de.sidion.books.client.domain.BookOrderedEvent;
 import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+
 public class BookOrderedEventConsumerPactTest {
 
     @Rule
     public MessagePactProviderRule mockProvider = new MessagePactProviderRule(this);
 
-    private byte[] currentMessage;
-
-    @Pact(provider = "book-order-service",
-            consumer = "books-client-book-ordered-event-consumer")
+    @Pact(
+            provider = "book-order-service",
+            consumer = "books-client-book-ordered-event-consumer"
+    )
     public MessagePact createPact(MessagePactBuilder builder) {
         PactDslJsonBody body = new PactDslJsonBody();
 
@@ -45,12 +52,29 @@ public class BookOrderedEventConsumerPactTest {
     @Test
     @PactVerification({"book-order-service"})
     public void verify() throws Exception {
-        Assert.assertNotNull(new String(currentMessage)); //a verifies is however always needed to generate the pact
+
+        //Test setup - no Spring context etc possible with pact messaging.
+        BookDomainService bookDomainService = new BookDomainService(null, null);
+        BookOrderedEventRabbitListener listener = new BookOrderedEventRabbitListener(bookDomainService);
+
+        //Pact creates the message from the contract dsl
+        byte[] rawMessage = mockProvider.getMessage();
+        String receivedJsonMessage = new String(rawMessage);
+
+        //verify that the message can actually be parsed to the expected object
+        BookOrderedEvent event = new ObjectMapper()
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                .readerFor(BookOrderedEvent.class).readValue(receivedJsonMessage);
+
+        //trivial that the message can actually be processed by the client
+        int counterBefore = bookDomainService.getMessagesReceivedCounter();
+        listener.receiveMessage(event);
+        int counterAfter = bookDomainService.getMessagesReceivedCounter();
+
+        assertThat(counterBefore, equalTo(counterAfter - 1 ));
     }
 
-    //set by the MessagePactProviderRule via reflection
-    public void setMessage(byte[] messageContents) {
-        currentMessage = messageContents;
-    }
+    //this is an alternative way to inject the message by the MessagePactProviderRule via reflection
+    public void setMessage(byte[] messageContents) { }
 
 }

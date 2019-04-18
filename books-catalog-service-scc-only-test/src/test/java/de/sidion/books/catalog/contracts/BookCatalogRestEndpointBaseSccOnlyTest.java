@@ -18,6 +18,7 @@ public abstract class BookCatalogRestEndpointBaseSccOnlyTest {
 
     @Before
     public void setup() {
+
         RestAssuredMockMvc.standaloneSetup(endpoint);
     }
 

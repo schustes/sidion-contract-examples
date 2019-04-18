@@ -23,6 +23,8 @@ public class BookRepositoryInMemoryBackend implements BookRepository {
                 .title("Endless possibilities in contract testing")
                 .id(1)
                 .isbn("521-8-99350-913-2")
+                .someAdditionalField1("bla")
+                .someAdditionalField2("blub")
                 .build();
 
         books.put(book.getId(), book);

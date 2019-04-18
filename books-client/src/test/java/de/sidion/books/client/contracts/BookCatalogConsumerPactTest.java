@@ -7,22 +7,17 @@ import au.com.dius.pact.consumer.dsl.DslPart;
 import au.com.dius.pact.consumer.dsl.PactDslJsonArray;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
 import au.com.dius.pact.model.RequestResponsePact;
+import de.sidion.books.client.adapter.BookCatalogRestService;
 import de.sidion.books.client.domain.Book;
 import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class BookCatalogConsumerPactTest {
@@ -34,7 +29,7 @@ public class BookCatalogConsumerPactTest {
 
     @Rule
     public PactProviderRuleMk2 mockProvider =
-            new PactProviderRuleMk2("book-catalog-service", "localhost", 8081, this);
+            new PactProviderRuleMk2("book-catalog-service", "localhost", 9999, this);
 
     @Pact(consumer="books-client-catalog-rest-consumer")
     public RequestResponsePact pact(PactDslWithProvider builder) throws Exception {
@@ -60,14 +55,6 @@ public class BookCatalogConsumerPactTest {
                 .body(dslPart)
                 .headers(responseHeaders())
 
-                .given("delete-with-insufficient-privileges")
-                .uponReceiving("A DELETE request with insufficient privileges")
-                .headers(expectedRequestHeaders())
-                .matchPath("/books/[0-9]*", "/books/123")
-                .method("DELETE")
-                .willRespondWith()
-                .status(401)
-
                 .toPact();
 
     }
@@ -85,52 +72,25 @@ public class BookCatalogConsumerPactTest {
         return map;
     }
 
-    private HttpEntity<?> requestHeaders() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.put(ROLE_HEADER, Collections.singletonList(ROLE_HEADER_VALUE));
-        headers.put(CONTENT_HEADER, Collections.singletonList(CONTENT_HEADER_VALUE));
-        return new HttpEntity<>(headers);
-    }
-
     @Test
     @PactVerification
     public void verifyPact() {
+
+        //we check the service call to the external system:
         RestTemplate template = new RestTemplate();
+        BookCatalogRestService service = new BookCatalogRestService(template);
 
-        verifyGetReturnsBooks(template);
+        List<Book> books = service.getAllBooks();
 
-        verifyDeleteIsPreventedForNormalUser(template);
-
-    }
-
-    private void verifyGetReturnsBooks(RestTemplate template) {
-
-        ResponseEntity<Book[]> response =
-                template.exchange("http://localhost:" + 8081 + "/books", HttpMethod.GET, requestHeaders(), Book[].class);
-
-        assertThat(response.getStatusCode().value(), equalTo(200));
-
-        Book[] books = response.getBody();
+        //and then check that the mock response returns the expected object
         assertThat(books, Matchers.notNullValue());
-        assertThat(books.length, Matchers.is(1));
-        Book book = books[0];
+        assertThat(books.size(), Matchers.greaterThanOrEqualTo(1));
+        Book book = books.get(0);
         assertThat(book.getId(), Matchers.isA(String.class));
         assertThat(book.getAuthorFirstName(), Matchers.isA(String.class));
         assertThat(book.getAuthorLastName(), Matchers.isA(String.class));
         assertThat(book.getTitle(), Matchers.isA(String.class));
         assertThat(book.getIsbn().length(), Matchers.is(17));
-
-    }
-
-    private void verifyDeleteIsPreventedForNormalUser(RestTemplate template) {
-
-        try {
-
-            template.exchange("http://localhost:" + 8081 + "/books/123", HttpMethod.DELETE, requestHeaders(), Void.class);
-
-        } catch (Exception e) {
-            assertThat(e.getMessage(), containsString("401"));
-        }
 
     }
 
