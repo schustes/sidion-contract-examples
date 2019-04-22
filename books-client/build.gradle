@@ -1,14 +1,14 @@
 apply plugin: 'au.com.dius.pact'
 
 test {
-    systemProperty 'pact.rootDir', 'target/pacts'
+    systemProperty 'pact.rootDir', 'build/pacts'
     systemProperty 'pact.verifier.publishResults', "true"
 }
 
 pact {
     publish {
         pactBrokerUrl = "http://localhost:80"
-        pactDirectory = "target/pacts"
+        pactDirectory = "${buildDir}/pacts"
     }
 }
 
