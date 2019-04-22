@@ -1,4 +1,4 @@
-package de.sidion.books.client.contracts;
+package de.sidion.books.client.contracts.pact;
 
 import au.com.dius.pact.consumer.MessagePactBuilder;
 import au.com.dius.pact.consumer.MessagePactProviderRule;

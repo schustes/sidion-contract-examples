@@ -1,4 +1,4 @@
-package de.sidion.books.client.contracts;
+package de.sidion.books.client.contracts.scc;
 
 import de.sidion.books.client.domain.BookDomainService;
 import org.junit.Test;
