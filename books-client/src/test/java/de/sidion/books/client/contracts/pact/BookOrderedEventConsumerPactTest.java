@@ -27,7 +27,7 @@ public class BookOrderedEventConsumerPactTest {
 
     @Pact(
             provider = "book-order-service",
-            consumer = "books-client-book-ordered-event-consumer"
+            consumer = "books-client"
     )
     public MessagePact createPact(MessagePactBuilder builder) {
         PactDslJsonBody body = new PactDslJsonBody();

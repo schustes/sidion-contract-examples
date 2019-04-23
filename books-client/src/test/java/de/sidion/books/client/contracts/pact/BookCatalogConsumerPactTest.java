@@ -31,7 +31,7 @@ public class BookCatalogConsumerPactTest {
     public PactProviderRuleMk2 mockProvider =
             new PactProviderRuleMk2("book-catalog-service", "localhost", 9999, this);
 
-    @Pact(consumer="books-client-catalog-rest-consumer")
+    @Pact(consumer="books-client")
     public RequestResponsePact pact(PactDslWithProvider builder) throws Exception {
 
 
