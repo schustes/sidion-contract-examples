@@ -2,6 +2,8 @@
 
 echo "Consumer: " $1
 echo "Provider: " $2
+host=$(hostname -I | awk '{print $1}' | tr -d '[:space:]')
+echo "host: " $host
 
 json='{  
 	"consumer": { 
@@ -12,12 +14,9 @@ json='{
 	}, 
 	"request": { 
 		"method": "POST",
-		"url": "http://measurementsolutions.de:80/generic-webhook-trigger/invoke?token='$2'",
+		"url": "http://'$host':8084/generic-webhook-trigger/invoke?token='$2'",
 		"headers": { 
 			"Accept": "application/json" 
-		},
-		"body": {
-		    "thisPactWasPublished" : "${pactbroker.pactUrl}"
 		}
 
 	}, 
@@ -26,7 +25,14 @@ json='{
 	}] 
 }'
 
+url=http://localhost/webhooks/provider/$1/consumer/$2
+echo "======= UPDATE WEBHOOK ======="
+echo "URL:" $url
+echo "============= Request Body =========="
+echo "$json"
+echo "====================================="
+
 curl -d "$json"  \
 -H "Content-Type: application/json" \
--X PUT http://localhost/webhooks/kh1jLTqBzAtCO7OnXOymHg -i
+-X PUT http://localhost/webhooks/$3 -w -i
 

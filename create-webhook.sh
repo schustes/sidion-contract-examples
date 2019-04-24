@@ -2,6 +2,8 @@
 
 echo "Consumer: " $1
 echo "Provider: " $2
+host=$(hostname -I | awk '{print $1}' | tr -d '[:space:]')
+echo "host: " $host
 
 json='{  
 	"consumer": { 
@@ -12,7 +14,7 @@ json='{
 	}, 
 	"request": { 
 		"method": "POST", 
-		"url": "http://127.0.0.1:8084/job/'$2'/build", 
+		"url": "http://'$host':8084/generic-webhook-trigger/invoke?token='$2'", 
 		"headers": { 
 			"Accept": "application/json" 
 		} 
@@ -22,9 +24,14 @@ json='{
 	}] 
 }'
 
+url=http://localhost/webhooks/provider/$1/consumer/$2
+echo "======= CREATE WEBHOOK ======="
+echo "URL:" $url
+echo "============= Request Body =========="
 echo "$json"
+echo "====================================="
 
 curl -d "$json"  \
 -H "Content-Type: application/json" \
--X POST http://localhost/webhooks/provider/book-catalog-service/consumer/books-client-catalog-rest-consumer
+-X POST http://$host/webhooks/provider/$2/consumer/$1 -i
 
