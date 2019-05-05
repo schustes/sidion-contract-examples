@@ -34,7 +34,6 @@ public class BookCatalogConsumerPactTest {
     @Pact(consumer="books-client")
     public RequestResponsePact pact(PactDslWithProvider builder) throws Exception {
 
-
         DslPart dslPart = new PactDslJsonArray()
                 .object()
                 .integerType("id")
@@ -45,8 +44,8 @@ public class BookCatalogConsumerPactTest {
 
         return builder
 
-                .given("get")
-                .uponReceiving("A successful Api GET call")
+                .given("books exist in the catalog")
+                .uponReceiving("a get call and books exist")
                 .path("/books")
                 .headers(expectedRequestHeaders())
                 .method("GET")
@@ -55,21 +54,15 @@ public class BookCatalogConsumerPactTest {
                 .body(dslPart)
                 .headers(responseHeaders())
 
+                .given("no books exist in the catalog")
+                .uponReceiving("a get call and no books exist")
+                .path("/books")
+                .headers(expectedRequestHeaders())
+                .method("GET")
+                .willRespondWith()
+                .status(404)
+
                 .toPact();
-
-    }
-
-    private Map<String, String> responseHeaders() {
-        Map<String, String> map = new HashMap<>();
-        map.put("Content-Type", "application/json;charset=UTF-8");
-        return map;
-    }
-
-    private Map<String, String> expectedRequestHeaders() {
-        Map<String, String> map = new HashMap<>();
-        map.put(CONTENT_HEADER, CONTENT_HEADER_VALUE);
-        map.put(ROLE_HEADER, ROLE_HEADER_VALUE);
-        return map;
     }
 
     @Test
@@ -92,6 +85,19 @@ public class BookCatalogConsumerPactTest {
         assertThat(book.getTitle(), Matchers.isA(String.class));
         assertThat(book.getIsbn().length(), Matchers.is(17));
 
+    }
+
+    private Map<String, String> responseHeaders() {
+        Map<String, String> map = new HashMap<>();
+        map.put("Content-Type", "application/json;charset=UTF-8");
+        return map;
+    }
+
+    private Map<String, String> expectedRequestHeaders() {
+        Map<String, String> map = new HashMap<>();
+        map.put(CONTENT_HEADER, CONTENT_HEADER_VALUE);
+        map.put(ROLE_HEADER, ROLE_HEADER_VALUE);
+        return map;
     }
 
 
