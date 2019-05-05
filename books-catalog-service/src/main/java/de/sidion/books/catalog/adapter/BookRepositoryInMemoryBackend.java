@@ -40,4 +40,10 @@ public class BookRepositoryInMemoryBackend implements BookRepository {
     public boolean delete(int id) {
         return books.remove(id) != null;
     }
+
+    @Override
+    public void deleteAll() {
+        books.clear();
+    }
+
 }

@@ -7,4 +7,6 @@ public interface BookRepository {
     List<Book>  findAll();
 
     boolean delete(int id);
+
+    void deleteAll();
 }
