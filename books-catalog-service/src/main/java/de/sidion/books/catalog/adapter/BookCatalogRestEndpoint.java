@@ -1,7 +1,7 @@
 package de.sidion.books.catalog.adapter;
 
-import de.sidion.books.catalog.domain.BookCatalogDomainService;
 import de.sidion.books.catalog.domain.Book;
+import de.sidion.books.catalog.domain.BookCatalogDomainService;
 import de.sidion.books.catalog.domain.UserNotAuthorizedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,7 +25,11 @@ public class BookCatalogRestEndpoint {
 
     @GetMapping
     public List<Book> getAllBooks() {
-        return bookCatalogDomainService.getAllBooks();
+        List<Book> books = bookCatalogDomainService.getAllBooks();
+        if (books.isEmpty()) {
+            throw new NotFoundException();
+        }
+        return books;
     }
 
     @DeleteMapping(path = "{id}")
@@ -36,4 +41,7 @@ public class BookCatalogRestEndpoint {
         }
     }
 
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+    private class NotFoundException extends RuntimeException {
+    }
 }
