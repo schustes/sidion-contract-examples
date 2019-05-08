@@ -12,11 +12,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
 @RunWith(SpringRestPactRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@TestPropertySource(properties = "server.port=8087")
 @Provider("book-catalog-service")
-@PactBroker(host="localhost", port="80", protocol = "http")
+@PactBroker(host="192.168.99.100", port="80", protocol = "http")
 public class BookCatalogRestEndpointPactOnlyTest {
 
     @Autowired

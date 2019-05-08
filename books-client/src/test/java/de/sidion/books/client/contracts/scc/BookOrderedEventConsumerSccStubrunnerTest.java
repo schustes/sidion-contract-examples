@@ -16,7 +16,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-@AutoConfigureStubRunner(stubsMode = StubRunnerProperties.StubsMode.LOCAL, ids = "de.sidion.books:books-order-service-scc-only-test")
+@AutoConfigureStubRunner(stubsMode = StubRunnerProperties.StubsMode.LOCAL,
+        ids = "de.sidion.books:books-order-service-scc-only-test")
 @DirtiesContext
 public class BookOrderedEventConsumerSccStubrunnerTest {
 

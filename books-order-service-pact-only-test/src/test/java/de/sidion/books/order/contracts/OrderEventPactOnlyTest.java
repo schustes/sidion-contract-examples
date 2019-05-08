@@ -30,9 +30,9 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.doAnswer;
 
-@RunWith(PactRunner.class) //Cannot be run with SpringRunner!
+@RunWith(PactRunner.class) //You can also use SpringPactMessageRunner if a Spring context is required
 @Provider("book-order-service")
-@PactBroker(host="localhost", port="80", protocol = "http")
+@PactBroker(host="192.168.99.100", port="80", protocol = "http")
 public class OrderEventPactOnlyTest {
 
     //Amqp Client: Is not a real client, but a class scanning for the @PactVerifier annotated method in the given packages.

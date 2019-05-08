@@ -20,7 +20,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE, classes = BookClientApplication.class)
 @AutoConfigureJsonTesters
-@AutoConfigureStubRunner(stubsMode = StubRunnerProperties.StubsMode.LOCAL, minPort = 9999, maxPort = 9999,
+@AutoConfigureStubRunner(stubsMode = StubRunnerProperties.StubsMode.LOCAL,
+        minPort = 9999, maxPort = 9999,
         ids = "de.sidion.books:books-catalog-service-scc-only-test")
 public class BookCatalogConsumerSccStubrunnerTest {
 

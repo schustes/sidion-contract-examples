@@ -29,9 +29,9 @@ public class BookCatalogConsumerPactTest {
 
     @Rule
     public PactProviderRuleMk2 mockProvider =
-            new PactProviderRuleMk2("book-catalog-service", "localhost", 9999, this);
+            new PactProviderRuleMk2("book-catalog-service", "localhost", 8081, this);
 
-    @Pact(consumer="books-client")
+    @Pact(consumer="books-client", provider="book-catalog-service")
     public RequestResponsePact pact(PactDslWithProvider builder) throws Exception {
 
         DslPart dslPart = new PactDslJsonArray()
@@ -73,18 +73,10 @@ public class BookCatalogConsumerPactTest {
         RestTemplate template = new RestTemplate();
         BookCatalogRestService service = new BookCatalogRestService(template);
 
-        List<Book> books = service.getAllBooks();
-
-        //and then check that the mock response returns the expected object
+        List<Book> books = service.getAllBooks(); //trigger endpoint and check that response was deserialized
+        //tests can end here, optional do more checks
         assertThat(books, Matchers.notNullValue());
-        assertThat(books.size(), Matchers.greaterThanOrEqualTo(1));
-        Book book = books.get(0);
-        assertThat(book.getId(), Matchers.isA(String.class));
-        assertThat(book.getAuthorFirstName(), Matchers.isA(String.class));
-        assertThat(book.getAuthorLastName(), Matchers.isA(String.class));
-        assertThat(book.getTitle(), Matchers.isA(String.class));
-        assertThat(book.getIsbn().length(), Matchers.is(17));
-
+        //...
     }
 
     private Map<String, String> responseHeaders() {

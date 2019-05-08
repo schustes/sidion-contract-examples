@@ -17,7 +17,7 @@ contracts {
     contractsMode = "REMOTE"
     baseClassForTests = "de.sidion.books.order.contracts.OrderEventPactWithSccTest"
     contractRepository {
-        repositoryUrl = "pact://http://localhost:80"
+        repositoryUrl = "pact://http://192.168.99.100:80"
     }
 }
 

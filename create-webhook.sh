@@ -14,7 +14,7 @@ json='{
 	}, 
 	"request": { 
 		"method": "POST", 
-		"url": "http://'$host':8084/generic-webhook-trigger/invoke?token='$2'", 
+		"url": "http://localhost:8080/generic-webhook-trigger/invoke?token='$2'",
 		"headers": { 
 			"Accept": "application/json" 
 		} 
@@ -24,7 +24,7 @@ json='{
 	}] 
 }'
 
-url=http://localhost/webhooks/provider/$1/consumer/$2
+url=http://192.168.99.100/webhooks/provider/$2/consumer/$1
 echo "======= CREATE WEBHOOK ======="
 echo "URL:" $url
 echo "============= Request Body =========="
@@ -33,5 +33,5 @@ echo "====================================="
 
 curl -d "$json"  \
 -H "Content-Type: application/json" \
--X POST http://$host/webhooks/provider/$2/consumer/$1 -i
+-X POST $url -i
 

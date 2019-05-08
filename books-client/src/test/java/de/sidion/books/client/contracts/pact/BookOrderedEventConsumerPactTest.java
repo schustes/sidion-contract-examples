@@ -25,10 +25,7 @@ public class BookOrderedEventConsumerPactTest {
     @Rule
     public MessagePactProviderRule mockProvider = new MessagePactProviderRule(this);
 
-    @Pact(
-            provider = "book-order-service",
-            consumer = "books-client"
-    )
+    @Pact(provider = "book-order-service", consumer = "books-client")
     public MessagePact createPact(MessagePactBuilder builder) {
         PactDslJsonBody body = new PactDslJsonBody();
 
