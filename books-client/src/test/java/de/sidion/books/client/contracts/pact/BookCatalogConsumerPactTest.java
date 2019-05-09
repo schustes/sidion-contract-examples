@@ -34,7 +34,7 @@ public class BookCatalogConsumerPactTest {
     @Pact(consumer="books-client", provider="book-catalog-service")
     public RequestResponsePact pact(PactDslWithProvider builder) throws Exception {
 
-        DslPart dslPart = new PactDslJsonArray()
+        DslPart expectedResponse = new PactDslJsonArray()
                 .object()
                 .integerType("id")
                 .stringMatcher("authorFirstName", ".*", "John")
@@ -51,7 +51,7 @@ public class BookCatalogConsumerPactTest {
                 .method("GET")
                 .willRespondWith()
                 .status(200)
-                .body(dslPart)
+                .body(expectedResponse)
                 .headers(responseHeaders())
 
                 .given("no books exist in the catalog")
