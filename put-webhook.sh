@@ -2,7 +2,7 @@
 
 echo "Consumer: " $1
 echo "Provider: " $2
-host=$(hostname -I | awk '{print $1}' | tr -d '[:space:]')
+host=$(hostname) #$(hostname -I | awk '{print $1}' | tr -d '[:space:]')
 echo "host: " $host
 
 json='{  
@@ -14,7 +14,7 @@ json='{
 	}, 
 	"request": { 
 		"method": "POST",
-		"url": "http://'$host':8084/generic-webhook-trigger/invoke?token='$2'",
+		"url": "http://'$host':8080/generic-webhook-trigger/invoke?token='$2'",
 		"headers": { 
 			"Accept": "application/json" 
 		}
@@ -25,7 +25,7 @@ json='{
 	}] 
 }'
 
-url=http://localhost/webhooks/provider/$1/consumer/$2
+url=http://192.168.99.100/webhooks/provider/$1/consumer/$2
 echo "======= UPDATE WEBHOOK ======="
 echo "URL:" $url
 echo "============= Request Body =========="
