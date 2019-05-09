@@ -16,8 +16,6 @@ Contract.make {
     outputMessage {
         // destination to which the output message will be sent
         sentTo 'order-exchange'
-
-        //body('''{ "bookName" : "foo" }''')
         body(
                 [
                 "isbn": $(regex("[0-9]{3}-[0-9]{1}-[0-9]{5}-[0-9]{3}-[0-9]{1}")) ,
