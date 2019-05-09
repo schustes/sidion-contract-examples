@@ -26,9 +26,6 @@ public class BookCatalogRestEndpoint {
     @GetMapping
     public List<Book> getAllBooks() {
         List<Book> books = bookCatalogDomainService.getAllBooks();
-        if (books.isEmpty()) {
-            throw new NotFoundException();
-        }
         return books;
     }
 
