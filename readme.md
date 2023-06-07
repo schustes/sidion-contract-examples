@@ -6,6 +6,8 @@ beidem (Fokus auf letzterem).
 Als Beispielanwendung wurden Fragmente einer Online-Bibliothek gewählt, umd sowohl Rest Verträge (books-catalog-service)
 als auch Message Verträge (books-order) abzubilden.
 
+Link zum Text: https://entwickler.de/spring/consumer-driven-contracts-mit-spring-001
+
 ## Aufbau ##
 
 #### Beispielanwendung ####
